@@ -17,17 +17,17 @@ def get_quarter(timestamp):
     try:
         time = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M')  # Adjust for ISO format
     except ValueError:
-        return 'Quarter 1'
+        return 'Quarter 1'  # Fallback in case of invalid timestamp
 
     hour = time.hour
     if 0 <= hour < 6:
-        return 'Quarter 1'
+        return 'Q1'  # Change to Q1
     elif 6 <= hour < 12:
-        return 'Quarter 2'
+        return 'Q2'  # Change to Q2
     elif 12 <= hour < 18:
-        return 'Quarter 3'
+        return 'Q3'  # Change to Q3
     else:
-        return 'Quarter 4'
+        return 'Q4'  # Change to Q4
 
 def format_timestamp_and_quarter(timestamp):
     try:
@@ -90,11 +90,11 @@ def predict():
         results.append({
             "Sensor Id": sensor_id,
             "Timestamp": formatted_timestamp,  # Use the formatted timestamp here
-            "Quarter": quarter,  # Include the quarter in the response
             "Location": location,
             "Water Level": water_level,
             "Battery Level": battery_level,
-            "Status": " & ".join(status)
+            "Status": " & ".join(status),
+            "Quarter": quarter  # Include the quarter in the response
         })
 
     return jsonify(results)

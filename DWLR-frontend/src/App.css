@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: rgb(139, 186, 219);
     margin: 0;
     padding: 20px;
 }
@@ -21,8 +21,9 @@ body {
 /* Form and Data Containers */
 .form-container,
 .data-container {
-    border: 1px solid #ccc;
+    border: 1px solid #121010;
     border-radius: 5px;
+    background-color: #d8dacc;
     padding: 15px;
     width: 48%; /* Adjust width to fit side by side */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -40,6 +41,7 @@ input {
     margin: 10px auto; /* Center align */
     padding: 8px;
 }
+
 select{
     display: block;
     width: 97.5%; /* Adjust width to fit within container */
@@ -67,6 +69,7 @@ table {
     width: 100%; /* Full width table */
     border-collapse: collapse;
     margin-top: 10px; /* Spacing from the button */
+    background-color: white; /* White background for the table */
 }
 
 /* Table Cell Styles */
@@ -76,23 +79,25 @@ th, td {
     padding: 8px;
     text-align: center;
 }
-.result-td{
+
+.result-td {
     color: black;
-    background-color: #cd832a;
+    background-color: rgb(33, 166, 33);
+}
+
+.error-result-td {
+    color: black;
+    background-color: rgb(173, 15, 15);
 }
 
 /* Header Styles */
 th {
-    background-color: #4CAF50; /* Green */
+    background-color: #45b0de; /* Green */
     color: white;
     font-weight: bold;
 }
 
-/* Row Styles */
-tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light Gray */
-}
-
+/* Row Hover Styles */
 tr:hover {
     background-color: #d1e7dd; /* Light Green on hover */
 }
@@ -128,7 +133,7 @@ td:nth-child(6):contains("Battery Anomaly") {
 }
 
 td:nth-child(6):contains("Water Anomaly & Battery Anomaly") {
-    background-color: #fd7e14; /* Orange */
+    background-color: #dc3545; /* Orange */
     color: #ffffff; /* White text */
 }
 

@@ -217,7 +217,7 @@ function App() {
       let quarter = '';
 
       if (datasetEntry) {
-        const timestamp = new Date(datasetEntry.timestamp);
+        const timestamp = new Date(datasetEntry.timestamp);  // Use timestamp from the dataset
         const isValidDate = !isNaN(timestamp.getTime()); // Check if timestamp is valid
 
         if (isValidDate) {
@@ -225,7 +225,7 @@ function App() {
           const month = (timestamp.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
           const year = timestamp.getFullYear();
 
-          // Determine quarter based on hour
+          // Determine quarter based on the hour
           const hour = timestamp.getHours();
           if (hour < 6) {
             quarter = 'Q1'; // 00:00 - 05:59
@@ -249,13 +249,12 @@ function App() {
           <td>{result.Location}</td>
           <td>{result['Water Level']}</td>
           <td>{result['Battery Level']}</td>
-          <td className='result-td'>{result.Status}</td>
+          <td className={result.Status !== "Normal" ? 'error-result-td' : 'result-td'}>{result.Status}</td>
         </tr>
       );
     })}
   </tbody>
 </table>
-
     </div>
   );
 }
