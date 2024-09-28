@@ -1,0 +1,172 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* App Container */
+.App {
+    padding: 20px;
+}
+
+/* Flex Container for Forms and Data */
+.container {
+    display: flex;
+    justify-content: space-between; /* Space between forms */
+    margin-bottom: 20px;
+}
+
+/* Form and Data Containers */
+.form-container,
+.data-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    width: 48%; /* Adjust width to fit side by side */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styles */
+h2, h3 {
+    text-align: center;
+}
+
+/* Input Styles */
+input {
+    display: block;
+    width: 95%; /* Adjust width to fit within container */
+    margin: 10px auto; /* Center align */
+    padding: 8px;
+}
+select{
+    display: block;
+    width: 97.5%; /* Adjust width to fit within container */
+    margin: 10px auto; /* Center align */
+    padding: 8px;
+}
+
+/* Button Styles */
+button {
+    background-color: #007bff; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    width: 100%; /* Full width button */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Table Styles */
+table {
+    width: 100%; /* Full width table */
+    border-collapse: collapse;
+    margin-top: 10px; /* Spacing from the button */
+}
+
+/* Table Cell Styles */
+th, td {
+    border: 1px solid #ccc;
+    color: black;
+    padding: 8px;
+    text-align: center;
+}
+.result-td{
+    color: black;
+    background-color: #cd832a;
+}
+
+/* Header Styles */
+th {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    font-weight: bold;
+}
+
+/* Row Styles */
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light Gray */
+}
+
+tr:hover {
+    background-color: #d1e7dd; /* Light Green on hover */
+}
+
+/* Status Styles */
+td:last-child {
+    font-weight: bold;
+}
+
+/* Status Color Coding */
+td:nth-child(6) {
+    color: #ffffff; /* Default text color */
+    padding: 10px 15px;
+}
+
+td:nth-child(6):contains("Invalid Sensor ID") {
+    background-color: #dc3545; /* Red */
+}
+
+td:nth-child(6):contains("Water Anomaly") {
+    background-color: #ffc107; /* Yellow */
+    color: #000; /* Black text for readability */
+}
+
+td:nth-child(6):contains("Normal") {
+    background-color: #28a745; /* Green */
+    color: #ffffff; /* White text */
+}
+
+td:nth-child(6):contains("Battery Anomaly") {
+    background-color: #17a2b8; /* Cyan */
+    color: #ffffff; /* White text */
+}
+
+td:nth-child(6):contains("Water Anomaly & Battery Anomaly") {
+    background-color: #fd7e14; /* Orange */
+    color: #ffffff; /* White text */
+}
+
+td:nth-child(6):contains("Sensor Data Anomaly") {
+    background-color: #6c757d; /* Gray */
+    color: #ffffff; /* White text */
+}
+
+/* Error Message Styles */
+.error {
+    color: red;
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.error-class {
+    margin: 10px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    .form-container,
+    .data-container {
+        width: 100%; /* Full width on small screens */
+        margin-bottom: 20px;
+    }
+}
