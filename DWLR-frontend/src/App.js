@@ -13,14 +13,14 @@ function App() {
   const [dataset, setDataset] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [isError, setIsError] = useState(false);
-  let error1 = "Some error occurred";
+  const error1 = "Some error occurred";
 
   // Load dataset from local storage on component mount
   useEffect(() => {
     const savedDataset = localStorage.getItem('dataset');
     if (savedDataset) {
       try {
-        setDataset(JSON.parse(savedDataset));  // Parse and load dataset if it exists
+        setDataset(JSON.parse(savedDataset));
       } catch (error) {
         console.error("Failed to load dataset from localStorage", error);
       }
@@ -30,7 +30,7 @@ function App() {
   // Save dataset to local storage whenever dataset changes
   useEffect(() => {
     if (dataset.length > 0) {
-      localStorage.setItem('dataset', JSON.stringify(dataset));  // Save to local storage
+      localStorage.setItem('dataset', JSON.stringify(dataset));
     }
   }, [dataset]);
 
@@ -103,6 +103,21 @@ function App() {
     }
   }, [predictions]);
 
+  // Function to convert timestamp to dd-mm-yyyy with hour and minute
+  const formatDateTime = (timestamp) => {
+    const dateObj = new Date(timestamp);
+    if (isNaN(dateObj)) return "Invalid Date"; // Handle invalid date
+
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1; // Months are 0-based
+    const year = dateObj.getFullYear();
+    const hours = dateObj.getHours().toString().padStart(2, '0');
+    const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+
+    // Format the date as dd-mm-yyyy with time
+    return `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year} ${hours}:${minutes}`;
+  };
+
   return (
     <div className="App">
       <h2>Sensor Management</h2>
@@ -157,7 +172,7 @@ function App() {
             <thead>
               <tr>
                 <th>Sensor ID</th>
-                <th>Date</th>
+                <th>Date and Time</th>
                 <th>Location</th>
                 <th>Water Level</th>
                 <th>Battery Level</th>
@@ -167,7 +182,7 @@ function App() {
               {dataset.map((item, index) => (
                 <tr key={index}>
                   <td>{item.sensorId}</td>
-                  <td>{item.timestamp}</td>
+                  <td>{formatDateTime(item.timestamp)}</td> {/* Use the format function */}
                   <td>{item.location}</td>
                   <td>{item.waterLevel}</td>
                   <td>{item.batteryLevel}</td>
@@ -176,35 +191,71 @@ function App() {
             </tbody>
           </table>
           <button onClick={sendForPrediction}>Send Data for Prediction</button>
-          {isError ? <span>{error1}</span> : <span></span>}
+          {isError && <span>{error1}</span>}
         </div>
       </div>
 
       <h3>Prediction Results</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Sensor ID</th>
-            <th>Quarter</th>
-            <th>Location</th>
-            <th>Water Level</th>
-            <th>Battery Level</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {predictions.map((result, index) => (
-            <tr key={index}>
-              <td>{result['Sensor Id']}</td>
-              <td>{result.Quarter}</td>
-              <td>{result.Location}</td>
-              <td>{result['Water Level']}</td>
-              <td>{result['Battery Level']}</td>
-              <td className='result-td'>{result.Status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+<table>
+  <thead>
+    <tr>
+      <th>Sensor ID</th>
+      <th>Date and Quarter</th>
+      <th>Location</th>
+      <th>Water Level</th>
+      <th>Battery Level</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {predictions.map((result, index) => {
+      // Find the corresponding dataset entry based on sensorId
+      const datasetEntry = dataset.find(item => item.sensorId === result['Sensor Id']);
+      
+      // Initialize formattedDate and quarter variables
+      let formattedDate = 'Invalid Date';
+      let quarter = '';
+
+      if (datasetEntry) {
+        const timestamp = new Date(datasetEntry.timestamp);
+        const isValidDate = !isNaN(timestamp.getTime()); // Check if timestamp is valid
+
+        if (isValidDate) {
+          const day = timestamp.getDate().toString().padStart(2, '0');
+          const month = (timestamp.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+          const year = timestamp.getFullYear();
+
+          // Determine quarter based on hour
+          const hour = timestamp.getHours();
+          if (hour < 6) {
+            quarter = 'Q1'; // 00:00 - 05:59
+          } else if (hour < 12) {
+            quarter = 'Q2'; // 06:00 - 11:59
+          } else if (hour < 18) {
+            quarter = 'Q3'; // 12:00 - 17:59
+          } else {
+            quarter = 'Q4'; // 18:00 - 23:59
+          }
+
+          // Format the date as dd-mm-yyyy
+          formattedDate = `${day}-${month}-${year}`;
+        }
+      }
+
+      return (
+        <tr key={index}>
+          <td>{result['Sensor Id']}</td>
+          <td>{`${formattedDate} (${quarter})`}</td> {/* Use the formatted date and quarter here */}
+          <td>{result.Location}</td>
+          <td>{result['Water Level']}</td>
+          <td>{result['Battery Level']}</td>
+          <td className='result-td'>{result.Status}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+
     </div>
   );
 }
