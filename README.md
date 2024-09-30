@@ -2,9 +2,9 @@ Here's a template for your README file that outlines the steps to set up and run
 
 ---
 
-# DWLR Project
+# DWLR Project - Prototype
 
-This project is designed to collect and analyze high-frequency water level readings from multiple sensors across various locations, detecting anomalies in water levels and battery status. The system consists of a React-based frontend and a Flask-based backend, built to display real-time data, predictions, and anomalies.
+This project is designed to collect and analyze high-frequency water level readings from multiple sensors across various locations, detecting anomalies in sensor status water levels and battery status. The system consists of a React-based frontend and a Flask-based backend, built to display real-time data, predictions, and anomalies.
 
 ## Table of Contents
 
@@ -118,7 +118,7 @@ The frontend is a React app that interacts with the backend to display sensor da
 
 ## API Endpoints
 
-- **POST /api/predict**: Accepts sensor data in JSON format and returns anomaly detection results based on water level and battery status.
+- **POST /api/predict**: Accepts sensor data in JSON format and returns anomaly detection results based on Sensor status water level and battery status.
 
 Request example:
 
